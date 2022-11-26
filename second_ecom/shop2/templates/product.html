@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block meta %}
+        {{ product.description|truncatewords:120 }}
+    {% endblock %}
+{% block title %}
+{% if product %}
+    {{ product.name }}----ABC Restaurent
+    {% endif %}
+{% endblock %}
+{% block body %}
+<div class="row my_product_row_class">
+    <div class="mx-auto">
+        <p><a href="{% url 'home:AllProCat' %}">Home</a> | <a href="{{product.category.get_url}}">{{product.category}}</a></p>
+    </div>
+</div>
+<div class="container">
+<br>
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+        <div style="min-width:18rem;">
+            <img src="{{product.image.url}}" alt="{{product.name}}" height="320px" width="300px">
+        </div>
+    </div>
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+            <div>
+            <h1 class="my_prod_title">{{product.name}}</h1>
+            <p><b>${{product.price}}</b></p>
+            <p class="my_title"> Product Description</p>
+            <p class="text-justify my_prod_text">{{product.description}}</p>
+            {% if product.stock <= 0 %}
+            <p class="text-justify my_product_text"><b>Out Of Stock</b></p>
+            {% else %}
+            <a class="btn btn-secondary" href="{% url 'cart:add_cart' product.id %}">Add To Cart</a>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock %}
